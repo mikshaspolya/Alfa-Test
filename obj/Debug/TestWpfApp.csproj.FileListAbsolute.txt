@@ -36,3 +36,5 @@ E:\Programming_myself\alfa\TestWpfApp\bin\Debug\Microsoft.IO.RecyclableMemoryStr
 E:\Programming_myself\alfa\TestWpfApp\bin\Debug\Newtonsoft.Json.xml
 E:\Programming_myself\alfa\TestWpfApp\bin\Debug\NLog.dll
 E:\Programming_myself\alfa\TestWpfApp\bin\Debug\NLog.xml
+E:\Programming_myself\alfa\TestWpfApp\bin\Debug\NLog.config
+E:\Programming_myself\alfa\TestWpfApp\obj\Debug\TestWpfApp_Content.g.cs

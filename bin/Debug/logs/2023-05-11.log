@@ -1,0 +1,24 @@
+2023-05-11 23:00:14.2198 Info regex parsing from file data.xml
+2023-05-11 23:00:14.2579 Info regex parsing success
+2023-05-11 23:00:41.2056 Info data model parsing from file data.xml
+2023-05-11 23:00:41.2056 Info data model parsing success
+2023-05-11 23:01:03.2774 Info data model parsing from file data.xml
+2023-05-11 23:01:03.2857 Info data model parsing success
+2023-05-11 23:01:10.8878 Info json export started
+2023-05-11 23:01:11.0810 Info json export success
+2023-05-11 23:03:02.1183 Info regex parsing from file data.xml
+2023-05-11 23:03:02.1183 Info regex parsing success
+2023-05-11 23:03:27.1051 Info regex parsing from file data.xml
+2023-05-11 23:03:27.1476 Info regex parsing success
+2023-05-11 23:03:54.8171 Info data model parsing from file data.xml
+2023-05-11 23:03:54.8331 Info data model parsing success
+2023-05-11 23:04:21.9760 Info word export started
+2023-05-11 23:04:22.1499 Info word export success
+2023-05-11 23:04:57.6977 Info excel export started
+2023-05-11 23:04:58.0378 Info excel export success
+2023-05-11 23:06:58.4729 Info regex parsing from file data.xml
+2023-05-11 23:06:58.5107 Info regex parsing success
+2023-05-11 23:07:18.8682 Info data model parsing from file data.xml
+2023-05-11 23:07:18.8892 Info data model parsing success
+2023-05-11 23:07:24.9771 Info word export started
+2023-05-11 23:07:25.0011 Info word export success

@@ -21,7 +21,6 @@
                     <DataTrigger Binding="{Binding Items.Count, ElementName=MyListBox}" Value="0">
                         <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
-                    
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
@@ -35,7 +34,6 @@
             <Button Style="{StaticResource MyCustomStyleButton}" Command="{Binding SortByDateCommand}" Content="Отсортировать" HorizontalAlignment="Left" Margin="10 10 0 10" Background="#FF3AA5B7" BorderBrush="#FF3AA5B7" Width="204" Cursor="Hand"/>
             <Label Content="Запись данных, выберите формат:" FontSize="20"/>
             <ComboBox Style="{StaticResource MyCustomStyleComboBox}" ItemsSource="{Binding Formats}" SelectedItem="{Binding SelectedFormat}" HorizontalAlignment="Left" Width="204" Margin="10 10 0 0" BorderBrush="#FF3AA5B7"/>
-            <!--<Button Style="{StaticResource MyCustomStyleButton}" Command="{Binding ExportCommand}" Content="Записать" HorizontalAlignment="Left" Margin="10 10 0 10" Background="#FF3AA5B7" BorderBrush="#FF3AA5B7" Width="204" Cursor="Hand"/>-->
         </StackPanel>
         <Grid Margin="335,0,0,0">
             <Label Content="Новости" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="22"/>
@@ -53,6 +51,5 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-
     </Grid>
 </Window>

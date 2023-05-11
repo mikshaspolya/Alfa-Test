@@ -6,26 +6,42 @@ using System.Text;
 using System.Threading.Tasks;
 using TestWpfApp.Models;
 using Newtonsoft.Json;
+using NLog;
 
 namespace TestWpfApp.Utils.Exports
 {
     internal class JsonDataExporter : IDataExporter
     {
-        public string FileExtension => throw new NotImplementedException();
+        private static readonly Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public string FileExtension => ".json";
 
         public async Task ExportDataAsync(IEnumerable<Item> data, string fileName)
         {
             if (data == null)
             {
+                logger.Error("there is no data for json export");
                 throw new ArgumentNullException(nameof(data));
             }
 
-            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
-
-            using (var streamWriter = new StreamWriter(fileName + FileExtension))
+            try
             {
-                await streamWriter.WriteAsync(json);
+                logger.Info("json export started");
+
+                var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+
+                using (var streamWriter = new StreamWriter(fileName + FileExtension))
+                {
+                    await streamWriter.WriteAsync(json);
+                }
+
+                logger.Info("json export success");
             }
+            catch (Exception ex)
+            {
+                logger.Error("json export failed with error: " + ex.Message);
+            }
+            
         }
     }
 }

@@ -9,21 +9,16 @@ namespace TestWpfApp.Models
 {
     public class Item
     {
-        [XmlElement("title")]
         public string Title { get; set; }
-        [XmlElement("link")]
         public string Link { get; set; }
-        [XmlElement("description")]
         public string Description { get; set; }
-        [XmlElement("category")]
         public string Category { get; set; }
-        [XmlElement("pubDate")]
         public DateTime PubDate { get; set; }
 
         public override string ToString()
         {
             string formattedDate = PubDate.ToString("ddd, dd MMM yyyy HH:mm:ss");
-            return $"title: {Title}\nlink: {Link}\ndescription: {Description}\ncategory: {Category}\npubdate: {formattedDate}\n";
+            return $"Заголовок: {Title}\n Ссылка: {Link}\n Описание: {Description}\n Категория: {Category}\n Дата публикации: {formattedDate}\n";
         }
     }
 }

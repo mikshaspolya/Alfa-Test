@@ -29,13 +29,13 @@ namespace TestWpfApp.ViewModels
         private ObservableCollection<Item> _items;
         private ObservableCollection<string> _categories;
         private ObservableCollection<string> _formats;
+        private ObservableCollection<Item> _filteredItems;
         private string _selectedCategory;
         private string _selectedFormat;
 
         private RelayCommand _readXmlDataModelCommand;
         private RelayCommand _readXmlRegexCommand;
         private RelayCommand _sortByDateCommand;
-        private RelayCommand _exportCommand;
 
         private readonly IParser _dataModelParser = new DataModelXmlParser();
         private readonly IParser _regexParser = new RegexXmlParser();
@@ -70,6 +70,7 @@ namespace TestWpfApp.ViewModels
                 OnPropertyChanged("Formats");
             }
         }
+
 
         public string SelectedCategory
         {
@@ -114,11 +115,19 @@ namespace TestWpfApp.ViewModels
 
             }
 
-            IEnumerable<Item> data = Items.Cast<Item>().ToList();
+            IEnumerable<Item> data = _filteredItems;
 
-            await exporter.ExportDataAsync(data, EXPORT_FILE_NAME);
-            MessageBox.Show("success");
- 
+            try
+            {
+                await exporter.ExportDataAsync(data, EXPORT_FILE_NAME);
+                MessageBox.Show("success");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("failed with error: " + ex.Message);
+            }
+            
+
         }
 
 
@@ -133,7 +142,7 @@ namespace TestWpfApp.ViewModels
                         {
                             _items.Clear();
 
-                            var items = await _dataModelParser.ParseAsync("data2.xml");
+                            var items = await _dataModelParser.ParseAsync(READ_FILE_NAME);
                             foreach (var item in items)
                             {
                                 _items.Add(item);
@@ -187,52 +196,6 @@ namespace TestWpfApp.ViewModels
             }
         }
 
-        public RelayCommand ExportCommand
-        {
-            get
-            {
-                if(_exportCommand == null)
-                {
-                    _exportCommand = new RelayCommand(() => { }, () => true);
-                    return _exportCommand;
-                }
-                else
-                {
-                    IDataExporter exporter = null;
-                    switch (SelectedFormat)
-                    {
-                        case "Word":
-                            exporter = new WordDataExporter();
-                            break;
-                        case "Excel":
-                            exporter = new ExcelDataExporter();
-                            break;
-                        case "JSON":
-                            exporter = new JsonDataExporter();
-                            break;
-                        default:
-                            break;
-
-                    }
-
-                    IEnumerable<Item> data = Items.OfType<Item>();
-                    if (_exportCommand != null)
-                    {
-                        _exportCommand = new RelayCommand(
-                            async () =>
-                            {
-                                await exporter.ExportDataAsync(data, EXPORT_FILE_NAME);
-                            },
-                            () => true
-                        );
-
-                    }
-                }
-
-                return _exportCommand;
-            }
-        }
-
 
         private void UpdateCategories()
         {
@@ -251,6 +214,12 @@ namespace TestWpfApp.ViewModels
                 {
                     return ((Item)item).Category == _selectedCategory;
                 };
+
+                _filteredItems = new ObservableCollection<Item>();
+                foreach (var item in view)
+                {
+                    _filteredItems.Add((Item)item);
+                }
             }
             return Items;
         }
@@ -260,6 +229,11 @@ namespace TestWpfApp.ViewModels
             ICollectionView view = CollectionViewSource.GetDefaultView(Items);
             view.SortDescriptions.Clear();
             view.SortDescriptions.Add(new SortDescription("PubDate", ListSortDirection.Ascending));
+            _filteredItems = new ObservableCollection<Item>();
+            foreach (var item in view)
+            {
+                _filteredItems.Add((Item)item);
+            }
         }
 
         public MainViewModel()
@@ -287,7 +261,6 @@ namespace TestWpfApp.ViewModels
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            //_exportCommand.RaiseCanExecuteChanged();
         }
 
     }
