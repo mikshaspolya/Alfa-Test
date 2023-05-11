@@ -1,0 +1,58 @@
+﻿<Window x:Class="TestWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="MyCustomStyleComboBox" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Items.Count, ElementName=MyListBox}" Value="0">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="MyCustomStyleButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedLightButton}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Items.Count, ElementName=MyListBox}" Value="0">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                    
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <StackPanel Margin="0,0,465,0">
+            <Label Content="Считать данные с помощью:" FontSize="20"/>
+            <Button Content="Регулярных выражений" Command="{Binding ReadXmlRegexCommand}" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Left" Margin="10 10 0 10" Background="#FF3AA5B7" BorderBrush="#FF3AA5B7" Width="204"/>
+            <Button Content="Модели данных" Command="{Binding ReadXmlDataModelCommand}" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Left" Margin="10 0 0 0"  Background="#FF3AA5B7" BorderBrush="#FF3AA5B7" Width="204" Cursor="Hand"/>
+            <Label Content="Фильтрация по категориям:" Margin="0 10 0 0" FontSize="20"/>
+            <ComboBox Style="{StaticResource MyCustomStyleComboBox}" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" HorizontalAlignment="Left" Width="204" Margin="10 10 0 10" BorderBrush="#FF3AA5B7"/>
+            <Label Content="Сортировка по дате:" Margin="0 10 0 0" FontSize="20"/>
+            <Button Style="{StaticResource MyCustomStyleButton}" Command="{Binding SortByDateCommand}" Content="Отсортировать" HorizontalAlignment="Left" Margin="10 10 0 10" Background="#FF3AA5B7" BorderBrush="#FF3AA5B7" Width="204" Cursor="Hand"/>
+            <Label Content="Запись данных, выберите формат:" FontSize="20"/>
+            <ComboBox Style="{StaticResource MyCustomStyleComboBox}" ItemsSource="{Binding Formats}" SelectedItem="{Binding SelectedFormat}" HorizontalAlignment="Left" Width="204" Margin="10 10 0 0" BorderBrush="#FF3AA5B7"/>
+            <!--<Button Style="{StaticResource MyCustomStyleButton}" Command="{Binding ExportCommand}" Content="Записать" HorizontalAlignment="Left" Margin="10 10 0 10" Background="#FF3AA5B7" BorderBrush="#FF3AA5B7" Width="204" Cursor="Hand"/>-->
+        </StackPanel>
+        <Grid Margin="335,0,0,0">
+            <Label Content="Новости" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="22"/>
+            <ListBox ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged }" IsSynchronizedWithCurrentItem="True" x:Name="MyListBox" Margin="10,52,10,10" FontSize="16">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="3">
+                            <TextBlock TextWrapping="Wrap" FontSize="16" Text="{Binding Path=Title}" />
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Text="{Binding Path=Category}" />
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Text="{Binding Path=Link}" />
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Text="{Binding Path=PubDate}" />
+                            <TextBlock TextWrapping="Wrap" FontSize="10" Text="{Binding Path=Description}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+    </Grid>
+</Window>
